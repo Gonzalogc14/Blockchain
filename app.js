@@ -6,7 +6,7 @@ async function startApp() {
         return;
     }
 
-    await window.ethereum.request({ method: 'eth_requestAccounts' }); // Solicitar acceso a cuentas de MetaMask
+    await window.ethereum.request({ method: 'eth_requestAccounts' }); 
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const contractAddress = '0x21011c6c52dB1e9c036476824adAD466EeB774c7';
