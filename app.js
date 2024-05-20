@@ -53,9 +53,16 @@ async function startApp() {
 
 async function displayTokens(contract) {
     const address = await contract.signer.getAddress();
-    const balance = await contract.balanceOf(address, 1); // Suponiendo que quieres ver el balance del token ID 1
-    if (balance > 0) {
-        const uri = await contract.uri(1);
+    const maxTokenId = 100; 
+    const existingTokens = []; 
+    for (let tokenId = 0; tokenId <= maxTokenId; tokenId++) {
+        let balance = await contract.balanceOf(address, tokenId);
+        if (balance > 0) {
+            existingTokens.push(tokenId);
+        }
+    }
+    for (let tokenId of existingTokens) {
+        const uri = await contract.uri(tokenId);
         const response = await fetch(uri);
         const metadata = await response.json();
         createCard(metadata);
@@ -74,3 +81,4 @@ function createCard(metadata) {
 }
 
 document.addEventListener('DOMContentLoaded', startApp);
+
